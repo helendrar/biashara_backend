@@ -1,0 +1,24 @@
+# Render deployment blueprint — NFR-03
+#
+# Render can read this automatically when you connect the repo, or you can
+# configure the same values by hand in the dashboard.
+services:
+  - type: web
+    name: biashara-backend
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+      # The rest are set in the Render dashboard, never committed:
+      #   ANTHROPIC_API_KEY
+      #   MPESA_CONSUMER_KEY
+      #   MPESA_CONSUMER_SECRET
+      #   MPESA_SHORTCODE
+      #   MPESA_PASSKEY
+      #   MPESA_CALLBACK_BASE_URL   (your Render URL, once assigned)
+      #   FIREBASE_CREDENTIALS      (contents of firebase-key.json, as one line)
+      #   ALLOWED_ORIGINS           (optional, comma-separated)
